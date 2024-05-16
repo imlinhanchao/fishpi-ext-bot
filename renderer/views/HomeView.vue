@@ -7,7 +7,7 @@
       </span>
       <a href="javascript:void(0)" @click="close" class="fa-solid fa-times"></a>
     </header>
-    <div class="layout">
+    <div class="layout" ref="msgsRef">
       <div class="msg-list">
         <div class="msg-item" v-for="(m, i) in messages" v-bind:key="i">
           <div class="msg-avatar-box">
@@ -37,7 +37,10 @@ export default {
   mounted () {
     window.$ipc.on('fishpi.bot.msg', (event, data) => {
       console.log('message', data)
-      this.messages.push(data)
+      this.messages.push(data);
+      this.$nextTick(() => {
+        this.$refs.msgsRef.scrollTop = this.$refs.msgsRef.scrollHeight;
+      })
     })
     window.$ipc.invoke('fishpi.info.token').then(console.log);
   },
