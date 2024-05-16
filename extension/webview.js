@@ -26,16 +26,10 @@ window.$ipc = {
     })
   },
   on (event, fn) {
-    if (!listener[event]) listener[event] = []
-    listener[event].push(fn)
+    ipcRenderer.on(event, fn)
   },
   off (event, fn) {
-    if (!listener[event]) return;
-    if (fn) {
-      listener[event] = listener[event].filter(f => f != fn)
-    } else {
-      delete listener[event]
-    }
+    ipcRenderer.off(event, fn)
   }
 }
 console.dir(window.$ipc)

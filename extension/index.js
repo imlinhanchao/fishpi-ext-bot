@@ -5,10 +5,11 @@ const createWindow = require('./window');
 let apiKey = '';
 let cxt = null;
 let ipc = null;
+let win = null;
 function activate(context, electron) {
   cxt = context;
   const { BrowserWindow, globalShortcut, ipcMain, Notification } = electron;
-  let win = createWindow(BrowserWindow);
+  win = createWindow(BrowserWindow);
   ipc = ipcMain;
 
   context.on('login', function(token) {
@@ -55,11 +56,16 @@ function login(context) {
   context.setHookJs && context.setHookJs(path.join(__dirname, 'hook.js'));
 }
 
+function filter(msg) {
+  if (msg.type != 'msg') return true;
+  const bots = ['b', 'sevenSummer']
+  if (!bots.includes(msg.data.userName)) return true;
+  return false;
+}
+
 const hooks = () => ({
   async messageEvent(msg){
-    if (msg.type != 'msg') return msg;
-    const bots = ['b', 'sevenSummer']
-    if (!bots.includes(msg.data.userName)) return msg;
+    if (filter(msg)) return msg;
     win.webContents.send('fishpi.bot.msg', msg);
   },
 })

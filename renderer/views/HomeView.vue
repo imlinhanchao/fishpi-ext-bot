@@ -18,10 +18,10 @@ export default {
   computed: {
   },
   mounted() {
-    // eslint-disable-next-line no-undef
-    $ipc.on('message', (event, data) => {
+    window.$ipc.on('fishpi.bot.msg', (event, data) => {
       console.log('message', data)
     })
+    window.$ipc.invoke('fishpi.info.token').then(console.log);
   },
   methods: {
   }
