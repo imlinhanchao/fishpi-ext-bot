@@ -56,7 +56,6 @@ function activate(context, electron) {
       {
           storage.set(args);
           win.webContents.send(`fishpi.set.setting`, args);
-          setting = args;
           break;
       }
   }
@@ -71,12 +70,14 @@ function login(context) {
 }
 
 function filter(msg) {
+  const setting = storage.get();
   if (!setting.enable) return true;
   if (msg.type != 'msg') return true;
   const bots = setting.bot.split(',');
   if (bots.includes(msg.data.userName)) return false;
   const cmds = setting.cmd.split(',');
-  if (cmds.some(c => msg.data.content.startsWith(c + ' '))) return false;
+  console.info('###', cmds, msg.data.md)
+  if (cmds.some(c => msg.data.md.startsWith(c + ' '))) return false;
   return true;
 }
 
@@ -90,8 +91,8 @@ const hooks = () => ({
 function getSettingUrl() {
   let Url = process.env.EXT_ENV == 'development' ? 
       "http://127.0.0.1:8080/#/setting" :
-      path.join(__dirname, "..", "dist", "index.html#/setting");
-  Url = "http://127.0.0.1:8080/#/setting"
+      path.join(__dirname, "..", "dist", "index.html") + '#/setting';
+  // Url = "http://127.0.0.1:8080/#/setting"
   return Url;
 }
 module.exports = { activate, hooks, getSettingUrl }
