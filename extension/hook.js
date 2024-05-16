@@ -4,7 +4,7 @@ let $vue = null;
 
 function openWindow () {
   $vue.$ipc.sendSync('fishpi.global.command', {
-    id: 'hancel.' + pkg.name,
+    id: pkg.publisher + '.' + pkg.name,
     command: 'fishpi.open.bot',
   }).then(console.log).catch(console.error)
 }
@@ -14,7 +14,7 @@ function sleep (ms) {
 }
 
 async function routerHook (to, from) {
-  if (to.meta.name == 'chatroom') {
+  if (to.meta.name == 'chatroom' && from?.meta?.name != 'chatroom') {
     await sleep(100)
     const toolbar = document.querySelector('.chat-toolbar')
     if (toolbar && !toolbar.querySelector('.robot-btn')) {

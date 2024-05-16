@@ -1,29 +1,36 @@
 <template>
   <div id="app">
-    <router-view v-if="this.$root.info"/>
+    <header>
+      <a href="javascript:void(0)" @click="close" class="fa fa-close" ></a>
+    </header>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import Fishpi from 'fishpi'
 export default {
   async mounted() {
-    // eslint-disable-next-line no-undef
-    let key = await $ipc?.invoke('fishpi.info.token');
-    this.$root.key = key || '';
-    if  (this.$root.key) {
-      this.$root.fishpi = new Fishpi(this.$root.key);
-      this.$root.info = (await this.$root.fishpi.account.info()).data;
-    }
-    this.loaded = true;
   },
   data() {
     return {
-      loaded: false
+    }
+  },
+  methods: {
+    close() {
+      // eslint-disable-next-line no-undef
+      $ipc.send('fishpi.bot.close')
     }
   }
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+header {
+  text-align: right;
+  padding: 10px;
+  -webkit-app-region: drag;
+  a {
+    -webkit-app-region: no-drag;
+  }
+}
 </style>

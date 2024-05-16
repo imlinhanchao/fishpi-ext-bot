@@ -3,9 +3,13 @@ const path = require('path');
 const createWindow = require('./window');
 
 let apiKey = '';
+let cxt = null;
+let ipc = null;
 function activate(context, electron) {
+  cxt = context;
   const { BrowserWindow, globalShortcut, ipcMain, Notification } = electron;
   let win = createWindow(BrowserWindow);
+  ipc = ipcMain;
 
   context.on('login', function(token) {
       apiKey = token;
@@ -36,6 +40,10 @@ function activate(context, electron) {
         win.isVisible() ? win.hide() : win.show();
         break;
       }
+      case 'fishpi.bot.close':
+      {
+        win.hide()
+      }
   }
   })
 }
@@ -49,13 +57,10 @@ function login(context) {
 
 const hooks = () => ({
   async messageEvent(msg){
-    
-  },
-  async sendMsgEvent(text){
-
-  },
-  async liveness(data){
-
+    if (msg.type != 'msg') return msg;
+    const bots = ['b', 'sevenSummer']
+    if (!bots.includes(msg.data.userName)) return msg;
+    win.webContents.send('fishpi.bot.msg', msg);
   },
 })
 module.exports = { activate, hooks }

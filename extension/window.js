@@ -28,8 +28,8 @@ module.exports = function createWindow(BrowserWindow) {
         },
     })
     let Url = process.env.EXT_ENV == 'development' ? 
-        "http://127.0.0.1:8080/#/msg" :
-        path.join(__dirname, "..", "dist", "index.html") + '#/msg';
+        "http://127.0.0.1:8080/#/" :
+        path.join(__dirname, "..", "dist", "index.html") + '#/';
 
     win.loadURL(Url);
     if (pos) win.setPosition(pos[0], pos[1]);
@@ -45,6 +45,7 @@ module.exports = function createWindow(BrowserWindow) {
       let size = win.getSize();
       localstorage.setItem('size', JSON.stringify(size));
     })
-    if(process.env.EXT_ENV == 'development') win.openDevTools();
+    if(process.env.EXT_ENV == 'development') 
+      win.openDevTools();
     return win;
 }
