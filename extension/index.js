@@ -71,6 +71,7 @@ function login(context) {
 }
 
 function filter(msg) {
+  if (!setting.enable) return true;
   if (msg.type != 'msg') return true;
   const bots = setting.bot.split(',');
   if (bots.includes(msg.data.userName)) return false;

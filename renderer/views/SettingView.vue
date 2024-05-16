@@ -1,6 +1,10 @@
 <template>
   <div class="layout">
     <p>
+      <input class="pretty" type="checkbox" id="enable" v-model="setting.enable"/>
+      <label for="enable">是否开启</label>
+    </p>
+    <p>
       <label for="tooltip">机器人用户名</label>
       <textarea class="pretty" type="text" id="bot" v-model="setting.bot"></textarea>
     </p>
@@ -22,6 +26,7 @@ export default {
     return {
       error: '',
       setting: {
+        enable: true,
         bot: 'b,xiaoIce,sevenSummer',
         cmd: '凌,小冰,鸽',
       },

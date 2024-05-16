@@ -11,7 +11,9 @@
 3. 重新开启客户端即可。
 
 ## 功能说明
-- TBD
+- 归集机器人消息。
+- 归集发给机器人的消息。
+- 独立机器人消息窗口。
 
 ## 调试说明
 1. 首先，将代码 clone 到扩展目录，运行 `npm run serve`，启动 vue 服务。
@@ -23,4 +25,4 @@
 # MacOS
 fishpi.app/Contents/MacOS/fishpi --dev
 ```
-3. 点击侧边栏图标进入启动扩展。即可启动对扩展 `webview` 调试。
+3. 调试设置界面的 Webview，可以在开发者工具执行：`document.querySelector('webview').openDevTools()`。
