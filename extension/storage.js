@@ -4,23 +4,8 @@ let localstorage = new LocalStorage(path.resolve(__dirname, "local"));
 
 let settings = localstorage.getItem('setting');
 settings = settings ? JSON.parse(settings) : {
-  enable: true,
-  tooltip: '距离下班',
-  size: 30,
-  color: '#000000',
-  opacity: .50,
-  begin: {
-    hour: 9,
-    min: 0,
-  },
-  end: {
-    hour: 18,
-    min: 0,
-  },
-  order: {
-    hour: 11,
-    min: 30,
-  },
+  bot: 'b,xiaoIce,sevenSummer',
+  cmd: '凌,小冰,鸽',
 };
 
 module.exports = {

@@ -29,12 +29,16 @@ export default {
   data () {
     return {
       messages: [
-      ]
+      ],
+      setting: {
+        bot: 'b,xiaoIce,sevenSummer',
+        cmd: '凌,小冰,鸽',
+      },
     }
   },
   computed: {
   },
-  mounted () {
+  async mounted () {
     window.$ipc.on('fishpi.bot.msg', (event, data) => {
       console.log('message', data)
       this.messages.push(data);
@@ -42,7 +46,12 @@ export default {
         this.$refs.msgsRef.scrollTop = this.$refs.msgsRef.scrollHeight;
       })
     })
+    window.$ipc.on('fishpi.set.setting', (event, data) => {
+      console.log('message', data)
+      this.setting = data;
+    })
     window.$ipc.invoke('fishpi.info.token').then(console.log);
+    this.setting = await window.$ipc.invoke('fishpi.get.setting');
   },
   methods: {
     close() {
@@ -67,6 +76,8 @@ header {
   display: flex;
   flex-direction: column;
   height: 100%;
+  opacity: .5;
+  background-color: rgba(12, 13, 14, 0.5);
 }
 
 .layout {

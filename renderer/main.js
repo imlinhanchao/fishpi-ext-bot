@@ -12,9 +12,6 @@ new Vue({
   router,
   store,
   data: {
-    fishpi: null,
-    key: '',
-    info: JSON.parse(localStorage.getItem('lastInfo') || 'null'),
   },
   mounted() {
 

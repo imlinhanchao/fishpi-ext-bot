@@ -27,9 +27,8 @@ module.exports = function createWindow(BrowserWindow) {
             preload: path.join(__dirname, 'webview.js'),
         },
     })
-    let Url = process.env.EXT_ENV == 'development' ? 
-        "http://127.0.0.1:8080/#/" :
-        path.join(__dirname, "..", "dist", "index.html") + '#/';
+    //let Url = path.join(__dirname, "..", "dist", "index.html") + '#/';
+    let Url = "http://127.0.0.1:8080/#/"
 
     win.loadURL(Url);
     if (pos) win.setPosition(pos[0], pos[1]);
@@ -45,7 +44,6 @@ module.exports = function createWindow(BrowserWindow) {
       let size = win.getSize();
       localstorage.setItem('size', JSON.stringify(size));
     })
-    if(process.env.EXT_ENV == 'development') 
-      win.openDevTools();
+    win.openDevTools();
     return win;
 }
